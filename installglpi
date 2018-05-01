@@ -1,3 +1,14 @@
+	
+# Executando
+# bash installglpi.sh versao senha
+# Exemplo
+# Autor Marcos Ferreira da Rocha
+# Email marcos.fr.rocha@gmail.com
+# github ferreirarocha
+# Telegram @ferreirarocha
+# bash ubuntuglpi 9.2.2 12345
+
+	su -
 	apt update ;
 	apt install unzip curl snmp apache2 php libapache2-mod-php php-curl php-mbstring php-mysql php-xml php-bcmath -y ;
 	apt install php-imap php-soap composer php-cli php-common php-snmp php-xmlrpc php-gd php-ldap -y ;
