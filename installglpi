@@ -25,7 +25,6 @@
 	tar  xfz glpi-$1.tgz -C /var/www/html/
 
 	
-
 ## Definindo permissões
 	chown www-data:www-data -R /var/www/html/glpi
 	chmod 775 -R /var/www/html/glpi
