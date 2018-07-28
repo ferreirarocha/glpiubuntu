@@ -1,0 +1,59 @@
+#LABEL maintainer="marcos.fr.rocha@gmail.com"
+APACHE_LOG_DIR=/var/log/apache2
+                                                
+
+apt update 
+apt install tzdata -y &&  echo "America/New_York" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata 
+apt install -y php7.2 php7.2-xml php7.2-opcache php-apcu php7.2-bcmath php7.2-imap php-cas php7.2-soap php7.2-cli php7.2-common php7.2-snmp php7.2-xmlrpc php7.2-gd php7.2-ldap libapache2-mod-php7.2 php7.2-curl php7.2-mbstring php7.2-mysql php-dev php-pear apache2 unzip curl snmp nano wget cron 
+apt install -y libmariadbd18 libmariadbd-dev mariadb-server php-dev php-pear 
+apt-get clean rm -rf /var/lib/apt/lists/* /tmp/*
+
+
+
+chown www-data:www-data -R /var/www/html/glpi
+chmod 775 -R /var/www/html/glpi
+echo -e "<Directory \"/var/www/html/glpi\">\n\tAllowOverride All\n</Directory>" > /etc/apache2/conf-available/glpi.conf
+
+echo -e "<VirtualHost *:80>\t
+ServerAdmin admin@glpi\n\tServerName glpi\n\tServerAlias glpi\n\tDocumentRoot /var/www/html/glpi\n\tErrorLog $APACHE_LOG_DIR/error.log \n\tCustomLog $APACHE_LOG_DIR/access.log combined\n\n</VirtualHost>" > /etc/apache2/sites-available/glpi.conf
+
+
+a2enconf glpi.conf \
+	&& a2enconf glpi2.conf \
+	&& echo "*/5 * * * * /usr/bin/php /var/www/html/glpi/front/cron.php &>/dev/null"  > /var/spool/cron/crontabs/root \
+	&& echo ' \n#!/bin/bash \n/etc/init.d/apache2 start \n/bin/bash' > /usr/bin/glpi \
+	&& chmod +x /usr/bin/glpi
+
+
+
+
+## Baixando o GLPI
+	wget  https://github.com/glpi-project/glpi/releases/download/9.3.0/glpi-9.3.0.tgz
+	tar -xzf  glpi-9.3.0.tgz -C /var/www/html  
+
+	rm /var/www/html/index.html
+	wget -cP  /var/www/html/  https://raw.githubusercontent.com/ferreirarocha/glpiubuntu/master/index.html
+
+	&& tar xfz GLPI-dashboard_plugin-0.9.0_GLPI-9.2.x.tar.gz -C  /var/www/html/glpi/plugins/ 	\
+	&& chmod 775 -Rf /var/www/html/glpi \
+	&& chown www-data. -Rf /var/www/html/glpi  \
+	&& rm -rf   glpi-9.3.0.tgz  GLPI-dashboard_plugin-0.9.0_GLPI-9.2.x.tar.gz
+
+
+
+
+
+
+	a2enconf glpi.conf
+	a2enconf glpi
+	a2ensite glpi.conf
+	systemctl  restart apache2 || /etc/init.d/apache2 restart
+	/etc/init.d/mysql start
+
+
+## Criando Banco de Dados GLPI
+	mysql -u root -e "create database glpi character set utf8";
+	mysql -u root -e "create user 'glpi'@'localhost' identified by '$2'";
+	mysql -u root -e "grant all on glpi.* to 'glpi'@'localhost'  with grant option";
+
+
