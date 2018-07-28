@@ -59,7 +59,7 @@ a2enconf glpi.conf \
 
 ## Criando Banco de Dados GLPI
 	mysql -u root -e "create database glpi character set utf8";
-	mysql -u root -e "create user 'glpi'@'localhost' identified by '$2'";
+	mysql -u root -e "create user 'glpi'@'localhost' identified by '$1'";
 	mysql -u root -e "grant all on glpi.* to 'glpi'@'localhost'  with grant option";
 
 
