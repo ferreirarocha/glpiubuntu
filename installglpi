@@ -37,6 +37,7 @@ APACHE_LOG_DIR=/var/log/apache2
 
 ## Baixando o GLPI
 	wget -c https://github.com/glpi-project/glpi/releases/download/$1/glpi-$1.tgz
+	wget -c https://raw.githubusercontent.com/ferreirarocha/glpiubuntu/master/index.html -P  /var/www/html/	
 
 	tar  xfz glpi-$1.tgz -C /var/www/html/
 
