@@ -2,8 +2,12 @@
 APACHE_LOG_DIR=/var/log/apache2
                                                 
 
+export DEBCONF_NONINTERACTIVE_SEEN=true DEBIAN_FRONTEND=noninteractive
+echo "America/Sao_Paulo" > /etc/timezone
+dpkg-reconfigure tzdata
+
 apt update 
-apt install tzdata -y &&  echo "America/New_York" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata 
+apt install tzdata -y 
 apt install -y php7.2 php7.2-xml php7.2-opcache php-apcu php7.2-bcmath php7.2-imap php-cas php7.2-soap php7.2-cli php7.2-common php7.2-snmp php7.2-xmlrpc php7.2-gd php7.2-ldap libapache2-mod-php7.2 php7.2-curl php7.2-mbstring php7.2-mysql php-dev php-pear apache2 unzip curl snmp nano wget cron 
 apt install -y libmariadbd18 libmariadbd-dev mariadb-server php-dev php-pear 
 apt-get clean rm -rf /var/lib/apt/lists/* /tmp/*
