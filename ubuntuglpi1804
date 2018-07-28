@@ -32,16 +32,18 @@ a2enconf glpi.conf \
 
 
 ## Baixando o GLPI
-	wget  https://github.com/glpi-project/glpi/releases/download/9.3.0/glpi-9.3.0.tgz
-	tar -xzf  glpi-9.3.0.tgz -C /var/www/html  
+	wget -c  https://github.com/glpi-project/glpi/releases/download/9.3.0/glpi-9.3.tgz
+	tar -xzf  glpi-9.3.tgz -C /var/www/html  
 
 	rm /var/www/html/index.html
-	wget -cP  /var/www/html/  https://raw.githubusercontent.com/ferreirarocha/glpiubuntu/master/index.html
+	wget -cP /var/www/html/ https://raw.githubusercontent.com/ferreirarocha/glpiubuntu/master/index.html 
 
-	&& tar xfz GLPI-dashboard_plugin-0.9.0_GLPI-9.2.x.tar.gz -C  /var/www/html/glpi/plugins/ 	\
-	&& chmod 775 -Rf /var/www/html/glpi \
-	&& chown www-data. -Rf /var/www/html/glpi  \
-	&& rm -rf   glpi-9.3.0.tgz  GLPI-dashboard_plugin-0.9.0_GLPI-9.2.x.tar.gz
+	wget https://forge.glpi-project.org/attachments/download/2216/GLPI-dashboard_plugin-0.9.0_GLPI-9.2.x.tar.gz 
+	tar xfz GLPI-dashboard_plugin-0.9.0_GLPI-9.2.x.tar.gz -C  /var/www/html/glpi/plugins/ 	
+
+	chmod 775 -Rf /var/www/html/glpi 
+	chown www-data. -Rf /var/www/html/glpi  
+	rm -rf   glpi-9.3.tgz  GLPI-dashboard_plugin-0.9.0_GLPI-9.2.x.tar.gz
 
 
 
